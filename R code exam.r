@@ -122,17 +122,24 @@ anno2015+anno2018+anno2023                           #Unisce i due grafici a bar
 #TIMES SERIES 
 ##Visualizziamo la differenza pixel per pixel tra le due immagini usando una palette di colori per evidenziare le variazioni tra le due. Osserviamo le differenze effettive tra le immagini in termini di intensità dei pixel. Otteniamo visivamente i cambiamenti di una certa zona. 
 ###Differenza tra le immagini della banda del Nir  
-diff1518<-vaia15[[4]] - vaia18[[4]]    #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir. 
-diff1823<-vaia18[[4]] - vaia23[[4]]
-diff1523<-vaia15[[4]] - vaia23[[4]]
+diffnir1518<-vaia15[[4]] - vaia18[[4]]    #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir. 
+diffnir1823<-vaia18[[4]] - vaia23[[4]]
+diffnir1523<-vaia15[[4]] - vaia23[[4]]
 
 clblu<- colorRampPalette(c("blue","white", "red")) (100)      #Crea una rampa di colori che va dal blu al bianco al rosso con 100 gradazioni.
 
 #I pixel blu indicano una minore intensità nella prima immagine rispetto alla seconda, quindi una probabile diminuzione dell'intensità del nir e quindi una probabile diminuzione della vegetazione. I pixel bianchi indicano una assenza di intensità. I pixel rossi indicano una maggiore intensità nella prima immagine rispetto alla seconda, ovvero un aumento dell'intensità del nir e quindi una crescita della vegetazione. I valori variano da +255 a -255 perchè la risoluzione radiometrica è di 8bit, quindi 255 possibilità. 
 par(mfrow=c(1,3))
-plot(diff1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "clblu" precedentemente creata. Osserviamo quindi la differenza tra le immagini dal 2015 al 2018.
-plot(diff1823, col=clblu) 
-plot(diff1523, col=clblu) 
+plot(diffnir1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "clblu" precedentemente creata. Osserviamo quindi la differenza tra le immagini dal 2015 al 2018.
+plot(diffnir1823, col=clblu) 
+plot(diffnir1523, col=clblu) 
+
+#Creazione di una palette di colori visibili da persone Daltoniche
+cividis <- colorRampPalette(viridis::cividis(100))(100)      #Creata una palette di colori chiamata "cividis" generando 100 colori diversi dalla palette "cividis" che è una palette prefatta dal pacchetto "viridis". La funzione colorRampPalette è una funzione che premette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
+par(mfrow=c(1,3))
+plot(diffnir1518, col=cividis)   
+plot(diffnir1823, col=cividis)
+plot(diffnir1523, col=cividis)
 
 #CALCOLO INDICE DI VARIABILITA': DVI E NDVI 
 ##Calcolo DVI: Indice di differenza di vegetazione. 
@@ -149,8 +156,7 @@ plot(dvi2015,col=clyellow)     #Le immagini vengono visualizzate tramite la funz
 plot(dvi2018,col=clyellow)  
 plot(dvi2023,col=clyellow)  
 
-#Creazione di una palette di colori visibili da persone Daltoniche
-cividis <- colorRampPalette(viridis::cividis(100))(100)      #Creata una palette di colori chiamata "cividis" generando 100 colori diversi dalla palette "cividis" che è una palette prefatta dal pacchetto "viridis". La funzione colorRampPalette è una funzione che premette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
 par(mfrow=c(1,3))
 plot(dvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
 plot(dvi2018, col=cividis)
@@ -165,28 +171,28 @@ ndvi2018<-dvi2018/(vaia18[[4]]+vaia18[[1]])
 ndvi2023<-dvi2023/(vaia23[[4]]+vaia23[[1]])   
 
 par(mfrow=c(1,3))                 #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
-plot(ndvi2015, col=clyellow)      #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow". 
+plot(ndvi2015, col=clyellow)      #l'oggetto ndvi2015 vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow". 
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
 #Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
 par(mfrow=c(1,3))
-plot(ndvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
+plot(ndvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "ndvi2015" con la palette di colori "cividis"
 plot(ndvi2018, col=cividis)
 plot(ndvi2023, col=cividis)
 
 #Calcolo delle differenze tra i vari anni del NDVI per determinare eventuali cambiamenti. Valori positivi indicano una maggiore presenza di vegetazione nel primo anno inserito, valori negativi indicano quantitativi maggiori di vegetazione nel secondo anno inserito nella differenza. 
-diffnir1518=ndvi2015 - ndvi2018
-diffnir1823=ndvi2018 - ndvi2023
-diffnir1523=ndvi2015 - ndvi2023
+diffNDVI1518=ndvi2015 - ndvi2018
+diffNDVI1823=ndvi2018 - ndvi2023
+diffNDVI1523=ndvi2015 - ndvi2023
 
 par(mfrow=c(1,3))                   #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
-plot(diffnir1518, col=clyellow)     #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow".        
-plot(diffnir1823, col=clyellow)
-plot(diffnir1523, col=clyellow)
+plot(diffNDVI1518, col=clyellow)    #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow".        
+plot(diffNDVI1823, col=clyellow)
+plot(diffNDVI1523, col=clyellow)
 
 #Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
 par(mfrow=c(1,3))
-plot(diffnir1518, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
-plot(diffnir1823, col=cividis)
-plot(diffnir1523, col=cividis)
+plot(diffNDVI1518, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "diffNDVI1518" con la palette di colori "cividis"
+plot(diffNDVI1823, col=cividis)
+plot(diffNDVI1523, col=cividis)
