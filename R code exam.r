@@ -1,10 +1,10 @@
-#Il seguente codice è stato scritto utilizzando questi pacchetti precedentemente scaricati.
-##Dopo aver installato i seguenti pacchetti con la funzione "install.packages("")" (NB: per installare il pacchetto bisogna inserirlo tra le virgolette), è necessario richiamare la funzione tramite il codice "library()" (richiamando la funzione non è necessario scrivere il pacchetto con le virgolette perchè è già presente in R una volta installato)
+#Codice per l'analisi dei danni causati dalla Tempesta Vaia in Carnia (UD) i ntre anni (2015,2018,2023).L'obiettivo principale è analizzare la perdita della copertura forestale, le precipitazioni nevose, e osservare eventuali miglioramenti e il recupero della vegetazione.
+##Il seguente codice è stato scritto utilizzando questi pacchetti precedentemente scaricati.
+###Dopo aver installato i seguenti pacchetti con la funzione "install.packages("")" (NB: per installare il pacchetto bisogna inserirlo tra le virgolette), è necessario richiamare la funzione tramite il codice "library()" (richiamando la funzione non è necessario scrivere il pacchetto con le virgolette perchè è già presente in R una volta installato)
 library(terra)       #Pacchetto R specializzata per l'analisi geospaziale e la manipolazione di dati raster.
 library(imageRy)     #Pacchetto R usato per gestire dati raster, la visualizzazione, l'importazione la modifica delle immagini. Inoltre, facilita la condivisione delle immagini.
 library(ggplot2)     #Pacchetto R per la creazione di grafici statistici.
 library(patchwork)   #Pacchetto R usato per organizzare e personalizzare la disposizione di più grafici. 
-library(viridis)     #Pacchetto R usato per dare delle palette di colore distinguibili anche dalle persone affette da daltonismo. 
 
 #"setwd()" è un comando usato per impostare la directory del lavoro. In questo caso è stata impostata nella cartella "immagini d'esame" nel desktop del computer.
 setwd("C:/Users/alexa/Desktop/Immagini esame")
@@ -163,7 +163,6 @@ plot(ndvi2015, col=clyellow)      #Le immagini vengono visualizzate tramite la f
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
-
 #Calcolo delle differenze del NIR tra i vari anni per determinare eventuali cambiamenti. Valori positivi indicano una maggiore presenza di vegetazione nel primo anno inserito, valori negativi indicano quantitativi maggiori di vegetazione nel secondo anno inserito nella differenza. 
 diffnir1518=ndvi2015 - ndvi2018
 diffnir1823=ndvi2018 - ndvi2023
@@ -173,68 +172,4 @@ par(mfrow=c(1,3))
 plot(diffnir1518, col=clyellow)        
 plot(diffnir1823, col=clyellow)
 plot(diffnir1523, col=clyellow)
-
-#ANALISI MULTIVARIATA 
-##Vengono eseguite analisi multivariate come l'applicazione di una trasformata principale delle componenti (PCA) alle immagini, il calcolo della deviazione standard tramite la funzione focal(), e il calcolo della varianza delle componenti principali ottenute dalla PCA.
-###Non sclego la banda:  viene eseguita la PCA sull'intera immagine senza specificare una banda. E' una analisi delle componenti principali dell'immagine che ci permette di portare un sistema a più bande in una sola. 
-
-pcimage15<-im.pca(vaia15)    #La funzione im.pca() ci da i valori delle componenti principali, ovvero: 126.115767, 34.245806, 7.722683, 2.409742
-pcimage18<-im.pca(vaia18)    #I valori delle componenti principali sono: 116.258096, 22.025689, 3.525593, 1.486523
-pcimage23<-im.pca(vaia23)    #I valori delle componenti principali sono: 129.868960, 36.889861, 9.751995, 2.256578
-
-tot15<-sum(126.115767, 34.245806, 7.722683, 2.409742)      #Sommatoria delle componenti principali  
-var15x<-126.115767*100/tot15      #Calcolo della varianza spiegata dalle 3 componenti principali per entrambi gli anni.
-var15y<-34.245806*100/tot15
-var15z<-7.722683*100/tot15
-var15k<-2.409742*100/tot15
-
-var15x      #Variabilità spiegata dal primo asse
-var15y      #Variabilità spiegata dal secondo asse
-var15z      #Variabilità spiegata dal terzo asse
-var15k      #Variabilità spiegata dal quarto asse
-
-tot18<-sum(116.258096, 22.025689, 3.525593, 1.486523)
-var18x<-116.258096*100/tot18
-var18y<-22.025689*100/tot18
-var18z<-3.525593*100/tot18
-var18k<-1.486523*100/tot18
-
-var18x
-var18y
-var18z
-var18k
-
-tot23<-sum(129.868960, 36.889861, 9.751995, 2.256578)
-var23x<-129.868960*100/tot18
-var23y<-36.889861*100/tot18
-var23z<-9.751995*100/tot18
-var23k<-2.256578*100/tot18
-
-var23x
-var23y
-var23z
-var23k
-
-inferno <- colorRampPalette(viridis::inferno(100))(100)      #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". La funzione colorRampPalette è una funzione che premette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
-    
-plot(pcimage15, col=inferno)            #Notiamo come PC3 indichi una bassa relazione
-plot(pcimage18, col=inferno)            
-plot(pcimage23, col=inferno)
- 
-###Scelgo io la banda: in questo caso viene specificata manualmente la banda da utilizzare, ovvero il nir. 
-nir15<-vaia15[[4]]                #Associamo la banda 4, il nir all'oggetto nir15 per comodità. Vogliamo usare l'infrarosso perchè la vegetazione assorbe il rosso.
-nir18<-vaia18[[4]]
-nir23<-vaia23[[4]]
-
-cividis <- colorRampPalette(viridis::cividis(100))(100)      #Creata una palette di colori chiamata "cividis" generando 100 colori diversi dalla palette "cividis" che è una palette prefatta dal pacchetto "viridis". La funzione colorRampPalette è una funzione che premette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
-plot(nir15, col=cividis)      #visualizzazione tramite la funzione "plot()" dell'oggetto "nir15"
-plot(nir18, col=cividis)
-plot(nir23, col=cividis)
-
-am15<-focal(nir15,matrix(1/9,3,3),fun=sd)      #Calcolo della deviazione standard attraverso la funzione "focal()" che consente di creare una finestra di calcolo la cui dimensione/composizione è definita da "matrix()"; nello specifico 1/9 indica che la finestra è grande 9 quadretti disposi 3x3. "fun()" indica la funzione e "sd" indica la deviazione standard. 
-am23<-focal(nir23,matrix(1/9,3,3),fun=sd)
-am18<-focal(nir18,matrix(1/9,3,3),fun=sd)
-plot(am15)                                     #Visualizzazione delle deviazioni standard delle due immagini. 
-plot(am18)
-plot(am23)
 
