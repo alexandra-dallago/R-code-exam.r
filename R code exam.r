@@ -30,10 +30,10 @@ plot(TC2015)          #Le immagini vengono visualizzate tramite la funzione "plo
 plot(TC2018)
 plot(TC2023)
 
-b15r<-TC2015[[1]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 1, ovvero la banda del rosso, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15r".
-b15g<-TC2015[[2]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 2, ovvero la banda del verde, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15v".
-b15b<-TC2015[[3]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 3, ovvero la banda del blu, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15b".
-b15nir<-NIR2015[[1]]   #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 1, ovvero la banda del nir, di "NIR2015") per assegnarlo ad un nuovo oggetto chiamato "b15nir".
+b15r<-TC2015[[1]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 1, ovvero la banda 4 del rosso, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15r".
+b15g<-TC2015[[2]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 2, ovvero la banda 3 del verde, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15v".
+b15b<-TC2015[[3]]      #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 3, ovvero la banda 2 del blu, di "TC2015") per assegnarlo ad un nuovo oggetto chiamato "b15b".
+b15nir<-NIR2015[[1]]   #Tramite le parentesi quadre si specifica l'oggetto da estrarre (in questo caso l'oggetto 1, ovvero la banda 8 del nir, di "NIR2015") per assegnarlo ad un nuovo oggetto chiamato "b15nir".
 
 b18r<-TC2018[[1]]    #Viene fatto lo stesso procedimento sopra descritto per tutti gli anni.
 b18g<-TC2018[[2]]
@@ -49,7 +49,7 @@ vaia15<-c(b15r,b15g,b15b,b15nir)      #Uniamo in un unico oggetto, ovvero "vaia1
 vaia18<-c(b18r,b18g,b18b,b18nir)
 vaia23<-c(b23r,b23g,b23b,b23nir)
 
-#Attraverso la funzione "im.plotRGB()" del pacchetto "imageRy", sostituitamo il nir (b8) con le altre componenti (le bande rosso, verde e blu) dell'immagine per vedere come i colori di queste cambiano.
+#Attraverso la funzione "im.plotRGB()" del pacchetto "imageRy", sostituitamo il nir (ovvero la banda b8 e 4° elemento dell'oggetto "vaia15/vaia18/vaia23") con le altre componenti (le bande rosso b4, verde b3 e blu b2) dell'immagine per vedere come i colori di queste cambiano.
 
 ##Nir sul red: questo comporta una visualizzazione che evidenzia le caratteristiche della vegetazione in quanto la vegetazione riflette molto di più nel nir rispetto alle altre superfici, facilitandone l'identificazione. E' possibile anche capirne lo stato di salute in quanto più queste sono in salute, più il nir verrà riflesso, e più l'immagine sarà luminosa. Di conseguenza, la vegetazione assumerà il colore rosso. Bisogna considerare anche che l'intensità della riflettanza cambia in base al tipo di vegetazione: un prato rifletterà di più di una pineta. 
 par(mfrow=c(1,3))
@@ -59,13 +59,13 @@ im.plotRGB(vaia23, 4,2,3)
 
 ##Nir sul blu: la vegetazione apparirà di colore blu. Inoltre, il suolo diventerà giallo fornendo un ottimo contrasto tra vegetazione e suolo. 
 par(mfrow=c(1,3))
-im.plotRGB(vaia15, 1,2,4)      #1,2,4 specificano rispettivamente red, green, nir
+im.plotRGB(vaia15, 1,2,4)      #1,2,4 specificano rispettivamente red, green, nir dell'oggetto "vaia15"
 im.plotRGB(vaia18, 1,2,4) 
 im.plotRGB(vaia23, 1,2,4) 
 
 ##Nir sul green: la vegetazione apparirà verde, dando un aspetto più naturale. 
 par(mfrow=c(1,3))
-im.plotRGB(vaia15, 1,4,3)      #1,4,3 specificano rispettivamente red, nir, blu
+im.plotRGB(vaia15, 1,4,3)      #1,4,3 specificano rispettivamente red, nir, blu dell'oggetto "vaia15"
 im.plotRGB(vaia18, 1,4,3) 
 im.plotRGB(vaia23, 1,4,3) 
 
@@ -99,9 +99,9 @@ perc2015= prop2015*100      #Calcolo della percentuale dei cluster/classi rispet
 perc2018= prop2018*100             
 perc2023= prop2023*100   
 
-perc2015      #Riscrivo il nome dell'oggetto aventi le percentuali per visualizzare il dato. 
-perc2018
-perc2023
+perc2015      #Riscrivo il nome dell'oggetto aventi le percentuali per visualizzare il dato. I risultati ottenuti sono: [1] 19.98092, [2] 54.42268, [3]25.59640; i numeri tra le parentesi quadre indicano la percentuale appartenente alla relativa classe/cluster 
+perc2018      #I risultati ottenuti sono: [1] 31.83124, [2] 34.10886, [3] 34.05817
+perc2023      #I risultati ottenuti sono: [1] 18.23045, [2] 50.31034, [3] 31.45921
 
 #GGPLOT E DATAFRAME 
 
@@ -121,7 +121,7 @@ anno2015+anno2018+anno2023                           #Unisce i due grafici a bar
 #TIMES SERIES 
 ##Visualizziamo la differenza pixel per pixel tra le due immagini usando una palette di colori per evidenziare le variazioni tra le due. Osserviamo le differenze effettive tra le immagini in termini di intensità dei pixel. Otteniamo visivamente i cambiamenti di una certa zona. 
 ###Differenza tra le immagini della banda del Nir  
-diff1518<-vaia15[[4]] - vaia18[[4]]    #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir.
+diff1518<-vaia15[[4]] - vaia18[[4]]    #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir. 
 diff1823<-vaia18[[4]] - vaia23[[4]]
 diff1523<-vaia15[[4]] - vaia23[[4]]
 
@@ -129,11 +129,11 @@ clblu<- colorRampPalette(c("blue","white", "red")) (100)      #Crea una rampa di
 
 #I pixel blu indicano una minore intensità nella prima immagine rispetto alla seconda, quindi una probabile diminuzione dell'intensità del nir e quindi una probabile diminuzione della vegetazione. I pixel bianchi indicano una assenza di intensità. I pixel rossi indicano una maggiore intensità nella prima immagine rispetto alla seconda, ovvero un aumento dell'intensità del nir e quindi una crescita della vegetazione. I valori variano da +255 a -255 perchè la risoluzione radiometrica è di 8bit, quindi 255 possibilità. 
 par(mfrow=c(1,3))
-plot(diff1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "cl" precedentemente creata. Osserviamo quindi la differenza tra le immagini dal 2015 al 2018.
+plot(diff1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "clblu" precedentemente creata. Osserviamo quindi la differenza tra le immagini dal 2015 al 2018.
 plot(diff1823, col=clblu) 
 plot(diff1523, col=clblu) 
 
-#A causa del quantitativo maggiore di neve presente nel 2018, i risultati vengono sfalsati e contrastanti rispetto alla classificazione calcolata precedentemente perchè neve riflette fortemente il nir. Di conseguenza si provvede a calcolare DVI  e NDVI e successiva differenza tra gli anni per evidenziare sempre eventuali cambiamenti negli anni. 
+#A causa del quantitativo maggiore di neve presente nel 2018, i risultati vengono sfalsati e contrastanti rispetto ai risultati ottenuti dalla classificazione calcolata precedentemente perchè la neve riflette fortemente il nir. Di conseguenza si provvede a calcolare DVI  e NDVI e successiva differenza tra gli anni per evidenziare sempre eventuali cambiamenti negli anni. 
 
 #CALCOLO INDICE DI VARIABILITA': DVI E NDVI 
 ##Calcolo DVI: Indice di differenza di vegetazione. 
@@ -145,7 +145,7 @@ dvi2018=vaia18[[4]] - vaia18[[1]]     #I risultati del DVI del 2018 sono: min -2
 dvi2023=vaia23[[4]] - vaia23[[1]]     #I risultati del DVI del 2023 sono: min -215, max 223 
 clyellow<-colorRampPalette(c("darkblue", "yellow", "red", "black"))(100)     #Crea una rampa di colori che va dal blu scuro, al giallo, al rosso e al nero con 100 gradazioni.
 
-par(mfrow=c(1,3))              #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 2 colonne.
+par(mfrow=c(1,3))              #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
 plot(dvi2015,col=clyellow)     #Le immagini vengono visualizzate tramite la funzione "plot()" e rappresentano l'indice di differenza di vegetazione per l'immagine del 2015 in questo caso.
 plot(dvi2018,col=clyellow)  
 plot(dvi2023,col=clyellow)  
@@ -158,18 +158,18 @@ ndvi2015<-dvi2015/(vaia15[[4]]+vaia15[[1]])    #"dvi2015" è il numeratore nir-r
 ndvi2018<-dvi2018/(vaia18[[4]]+vaia18[[1]])
 ndvi2023<-dvi2023/(vaia23[[4]]+vaia23[[1]])   
 
-par(mfrow=c(1,3))                 #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 2 colonne.
-plot(ndvi2015, col=clyellow)      #Le immagini vengono visualizzate tramite la funzione "plot()" con al relativa palette di colori. 
+par(mfrow=c(1,3))                 #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
+plot(ndvi2015, col=clyellow)      #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow". 
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
-#Calcolo delle differenze del NIR tra i vari anni per determinare eventuali cambiamenti. Valori positivi indicano una maggiore presenza di vegetazione nel primo anno inserito, valori negativi indicano quantitativi maggiori di vegetazione nel secondo anno inserito nella differenza. 
+#Calcolo delle differenze tra i vari anni del NDVI per determinare eventuali cambiamenti. Valori positivi indicano una maggiore presenza di vegetazione nel primo anno inserito, valori negativi indicano quantitativi maggiori di vegetazione nel secondo anno inserito nella differenza. 
 diffnir1518=ndvi2015 - ndvi2018
 diffnir1823=ndvi2018 - ndvi2023
 diffnir1523=ndvi2015 - ndvi2023
 
-par(mfrow=c(1,3))  
-plot(diffnir1518, col=clyellow)        
+par(mfrow=c(1,3))                   #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
+plot(diffnir1518, col=clyellow)     #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow".        
 plot(diffnir1823, col=clyellow)
 plot(diffnir1523, col=clyellow)
 
