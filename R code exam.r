@@ -133,8 +133,6 @@ plot(diff1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa
 plot(diff1823, col=clblu) 
 plot(diff1523, col=clblu) 
 
-#A causa del quantitativo maggiore di neve presente nel 2018, i risultati vengono sfalsati e contrastanti rispetto ai risultati ottenuti dalla classificazione calcolata precedentemente perchè la neve riflette fortemente il nir. Di conseguenza si provvede a calcolare DVI  e NDVI e successiva differenza tra gli anni per evidenziare sempre eventuali cambiamenti negli anni. 
-
 #CALCOLO INDICE DI VARIABILITA': DVI E NDVI 
 ##Calcolo DVI: Indice di differenza di vegetazione. 
 ###Questo indice sfrutta l'alta capacità di riflettanza dell'infrarosso e l'alta capacità di assorbimento del rosso per determinare, tramite una differenza nir-red, la biomassa/densità di vegetazione presente. Possiamo anche determianre lo stato di salute della pianta in base all'accrescimento del rosso o infrarosso (se aumenta da rosso a nir la pianta è sana). Si può usare anche la banda del blu per il calcolo. 
