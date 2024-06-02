@@ -5,6 +5,7 @@ library(terra)       #Pacchetto R specializzata per l'analisi geospaziale e la m
 library(imageRy)     #Pacchetto R usato per gestire dati raster, la visualizzazione, l'importazione la modifica delle immagini. Inoltre, facilita la condivisione delle immagini.
 library(ggplot2)     #Pacchetto R per la creazione di grafici statistici.
 library(patchwork)   #Pacchetto R usato per organizzare e personalizzare la disposizione di più grafici. 
+library(viridis)     #Pacchetto R usato per dare delle palette di colore distinguibili anche dalle persone affette da daltonismo. 
 
 #"setwd()" è un comando usato per impostare la directory del lavoro. In questo caso è stata impostata nella cartella "immagini d'esame" nel desktop del computer.
 setwd("C:/Users/alexa/Desktop/Immagini esame")
@@ -148,6 +149,13 @@ plot(dvi2015,col=clyellow)     #Le immagini vengono visualizzate tramite la funz
 plot(dvi2018,col=clyellow)  
 plot(dvi2023,col=clyellow)  
 
+#Creazione di una palette di colori visibili da persone Daltoniche
+cividis <- colorRampPalette(viridis::cividis(100))(100)      #Creata una palette di colori chiamata "cividis" generando 100 colori diversi dalla palette "cividis" che è una palette prefatta dal pacchetto "viridis". La funzione colorRampPalette è una funzione che premette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
+par(mfrow=c(1,3))
+plot(dvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
+plot(dvi2018, col=cividis)
+plot(dvi2023, col=cividis)
+
 #Calcolo NDVI: indice di differenza normalizzata delle vegetazioni utilizzando i valori delle bande rosse e infrarosse delle immagini. Viene calcolata con la formula NDVI=(nir-red/nir+red). Permette di confrontare i valori tra immagini che hanno una risoluzione radiometrica diversa (ad esempio una immagine a 8 bit con una a 16 bit).
 ##Il valore NDVI va da +1 a -1  perchè se il nir è massimo e red minimo, inserendo nella formula otteniamo: 255-0/255+0=1 (valore massimo). Otteniamo -1 quando il nir è minimo. 
 ###Interpretazione dei dati NDVI: valori alti, vicini a +1= vegetazione densa e sana; valori vicini 0= vegetazione scarsa, neve/ghiaccio o suolo nudo; valori bassi vicini a -1= superfici non vegetate o urbanizzate come costruzioni o strade. 
@@ -161,6 +169,12 @@ plot(ndvi2015, col=clyellow)      #Le immagini vengono visualizzate tramite la f
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
+par(mfrow=c(1,3))
+plot(ndvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
+plot(ndvi2018, col=cividis)
+plot(ndvi2023, col=cividis)
+
 #Calcolo delle differenze tra i vari anni del NDVI per determinare eventuali cambiamenti. Valori positivi indicano una maggiore presenza di vegetazione nel primo anno inserito, valori negativi indicano quantitativi maggiori di vegetazione nel secondo anno inserito nella differenza. 
 diffnir1518=ndvi2015 - ndvi2018
 diffnir1823=ndvi2018 - ndvi2023
@@ -171,3 +185,8 @@ plot(diffnir1518, col=clyellow)     #Le immagini vengono visualizzate tramite la
 plot(diffnir1823, col=clyellow)
 plot(diffnir1523, col=clyellow)
 
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
+par(mfrow=c(1,3))
+plot(diffnir1518, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
+plot(diffnir1823, col=cividis)
+plot(diffnir1523, col=cividis)
