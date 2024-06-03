@@ -1,4 +1,4 @@
-#Codice per l'analisi dei danni causati dalla Tempesta Vaia in Carnia (UD) i ntre anni (2015,2018,2023).L'obiettivo principale è analizzare la perdita della copertura forestale, le precipitazioni nevose, e osservare eventuali miglioramenti e il recupero della vegetazione.
+#Codice per l'analisi dei danni causati dalla Tempesta Vaia in Carnia (UD) in tre anni (2015,2018,2023). L'obiettivo principale è analizzare la perdita della copertura forestale, le precipitazioni nevose, e osservare eventuali miglioramenti e il recupero della vegetazione.
 ##Il seguente codice è stato scritto utilizzando questi pacchetti precedentemente scaricati.
 ###Dopo aver installato i seguenti pacchetti con la funzione "install.packages("")" (NB: per installare il pacchetto bisogna inserirlo tra le virgolette), è necessario richiamare la funzione tramite il codice "library()" (richiamando la funzione non è necessario scrivere il pacchetto con le virgolette perchè è già presente in R una volta installato)
 library(terra)       #Pacchetto R specializzata per l'analisi geospaziale e la manipolazione di dati raster.
@@ -80,7 +80,7 @@ pairs(vaia23)
 ##Viene fatta la classificazione delle immagini attraverso la funzione "im.classify()" e successivo calcolo della relativa frequenza, proporzione e percentuale del numero dei pixel. La funzione fa parte del pacchetto "imageRy".
 ###Classifica le immagini tramite un algoritmo che permette di creare dei gruppi/cluster basandosi sulla riflettanza del pixel (che a sua volta è in funzione di che oggetto si trova su quel pixel, quindi se una pianta o del suolo ad esempio). La funzione prende i pixel dell'immagine in maniera casuale, pertanto i colori dei cluster delle classificazioni sono diversi. 
 
-vaia15c<-im.classify(vaia15,3)            #"im.classify()" è la funzione che permette la classificazione. Tra le parentesi si specifica l'oggeto da cui si vuole fare la classificazione (vaia15), seguito dal numero di cluster/classi che si vuole avere (3).      
+vaia15c<-im.classify(vaia15,3)            #"im.classify()" è la funzione che permette la classificazione. Tra le parentesi si specifica l'oggetto da cui si vuole fare la classificazione (vaia15), seguito dal numero di cluster/classi che si vuole avere (3).      
 vaia18c<-im.classify(vaia18,3) 
 vaia23c<-im.classify(vaia23,3) 
 
