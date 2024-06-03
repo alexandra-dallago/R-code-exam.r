@@ -196,3 +196,74 @@ par(mfrow=c(1,3))
 plot(diffNDVI1518, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "diffNDVI1518" con la palette di colori "cividis"
 plot(diffNDVI1823, col=cividis)
 plot(diffNDVI1523, col=cividis)
+
+#ANALISI MULTIVARIATA 
+##Analisi delle componenti principali (PCA) delle immagini.
+###Non scelgo la banda: viene eseguita la PCA sull'intera immagine senza specificare una banda. E' una analisi delle componenti principali dell'immagine che ci permette di portare un sistema a più bande in una sola. CI permette quindi di trasformare i dati presenti in un oggetto e trasformarli  in un nuovo set di variavili chiamate componenti principali che spiegheranno la variabilità dei dati originali.  
+
+pcimage15<-im.pca(vaia15)    #La funzione im.pca() ci da i valori delle componenti principali, ovvero:  136.453262, 32.793144, 7.449183, 2.016412
+pcimage18<-im.pca(vaia18)    #I valori delle componenti principali sono: 114.409353, 25.662257,3.863173, 1.977942
+pcimage23<-im.pca(vaia23)    #I valori delle componenti principali sono: 136.599691, 36.608307, 8.798568, 2.441129
+
+tot15<-sum(136.453262, 32.793144, 7.449183, 2.016412)   #Sommatoria delle componenti principali per l'anno 2015; è quindi la sommatoria delle varianze spiegate dalle prime 4 componenti principali ottenute dalla PCA. 
+var15x<-136.453262*100/tot15      #Calcolo della varianza spiegata dalle 3 componenti principali, in percentuale. 
+var15y<-32.793144*100/tot15
+var15z<-7.449183*100/tot15
+var15k<-2.016412*100/tot15
+
+var15x      #Variabilità spiegata dal primo asse: 76.35372
+var15y      #Variabilità spiegata dal secondo asse: 18.34972
+var15z      #Variabilità spiegata dal terzo asse: 4.168261
+var15k      #Variabilità spiegata dal quarto asse: 1.128303
+
+tot18<-sum(114.409353, 25.662257,3.863173, 1.977942)
+var18x<-114.409353*100/tot18
+var18y<-25.662257*100/tot18
+var18z<-3.863173*100/tot18
+var18k<-1.977942*100/tot18
+
+var18x      #Variabilità spiegata dal primo asse: 78.40944
+var18y      #Variabilità spiegata dal secondo asse: 17.5874
+var18z      #Variabilità spiegata dal terzo asse: 2.647592
+var18k      #Variabilità spiegata dal quarto asse: 1.355565
+
+tot23<-sum(136.599691, 36.608307, 8.798568, 2.441129) 
+var23x<-136.599691*100/tot18
+var23y<-36.608307*100/tot18
+var23z<-8.798568*100/tot18
+var23k<-2.441129*100/tot18
+
+var23x       #Variabilità spiegata dal primo asse: 93.61739
+var23y       #Variabilità spiegata dal secondo asse: 25.08918
+var23z       #Variabilità spiegata dal terzo asse: 6.030021
+var23k       #Variabilità spiegata dal quarto asse: 1.673006
+
+inferno <- colorRampPalette(viridis::inferno(100))(100)      #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". La funzione colorRampPalette è una funzione che permette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
+    
+plot(pcimage15, col=inferno)            #Notiamo come PC3 indichi una bassa relazione
+plot(pcimage18, col=inferno)            
+plot(pcimage23, col=inferno)
+ 
+###Si sceglie di fare l'analisi sulla prima componente (pc1) ottenuta precedentemente dalla funzione "im.pca()" perchè è la più rappresentativa, attraverso la funzione "focal()" che crea una finestra di calcolo che mi darà la mappa della variabilità dell'immagine. 
+pca1_2015<-pcimage15[[1]]                #Seleziono la prima componente (quella con la maggiore variabilità spiegata) ottenuta dalla funzione "im.pca()" dell'oggetto pcimage15, attravereso le parentesi quadre.
+pca1_2018<-pcimage18[[1]]
+pca1_2023<-pcimage23[[1]]
+
+par(mfrow=c(1,3))              #Visualizzazione della prima componente ottentuta dalla PCA nei tre anni con la palette di colori "inferno". 
+plot(pca1_2015, col=inferno)      
+plot(pca1_2018, col=inferno)
+plot(pca1_2023, col=inferno)
+
+am15<-focal(pca1_2015,matrix(1/9,3,3),fun=sd)      #Calcolo della deviazione standard attraverso la funzione "focal()" che consente di creare una finestra di calcolo la cui dimensione/composizione è definita da "matrix()"; nello specifico 1/9 indica che la finestra è grande 9 quadretti disposi 3x3. "fun()" indica la funzione e "sd" indica la deviazione standard. 
+am23<-focal(pca1_2018,matrix(1/9,3,3),fun=sd)
+am18<-focal(pca1_2023,matrix(1/9,3,3),fun=sd)
+
+par(mfrow=c(1,3))      
+plot(am15, col=clyellow)    #Visualizzazione delle deviazioni standard, e quindi della variabilità, delle immagini con la palette di colori "clyellow".
+plot(am18, col=clyellow)    #Valori vicino allo 0 indicano bassa variabilità; valori prosismi a 25 indicano alta variabilità. 
+plot(am23, col=clyellow)
+
+par(mfrow=c(1,3))
+plot(am15, col=inferno)    #Visualizzazione delle deviazioni standard delle immagini con la palette di colori "inferno".                                   
+plot(am18, col=inferno)
+plot(am23, col=inferno)
