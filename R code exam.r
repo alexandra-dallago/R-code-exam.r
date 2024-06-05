@@ -15,14 +15,14 @@ setwd("C:/Users/alexa/Desktop/Immagini esame")
 ###Per ciascun anno sono state scaricate due immagini dal satellite "sentinel 2", rispettivamente immagini "true color" aventi le bande b4, b3 e b2 (red, green, blue); e una seconda immagine "false color" aventi le bande b8, b4 e b3 (nir, red, green). Lo scopo è quello di prelevare la banda b8, ovvero quella del nir, per importarla in un unico oggetto assieme alle altre bande b4, b3 e b2.
 ####Importiamo le immagini dalla cartella indicata nella directory tramite la funzione "rast()" del pacchetto "terra", che ci consente di importare delle immagini creando un oggetto Spatraster.
 
-TC2015<-rast("tc2015vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2015" per l'anno 2015. Le bande presenti in questo oggetto sono b4, b3 e b2.  
-NIR2015<-rast("fc2015vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2015" per l'anno 2015. Le bande presenti in questo oggetto sono b8, b4 e b3.  
+TC2015<-rast("tc2015vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2015" per l'anno 2015. Le bande presenti in questo oggetto sono b4, b3 e b2 (red, green, blue).  
+NIR2015<-rast("fc2015vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2015" per l'anno 2015. Le bande presenti in questo oggetto sono b8, b4 e b3 (nir, red, green).  
 
-TC2018<-rast("tc2018vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2018" per l'anno 2018. Le bande presenti in questo oggetto sono b4, b3 e b2.  
-NIR2018<-rast("fc2018vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2018" per l'anno 2015. Le bande presenti in questo oggetto sono b8, b4 e b3.
+TC2018<-rast("tc2018vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2018" per l'anno 2018. Le bande presenti in questo oggetto sono b4, b3 e b2(red, green, blue).  
+NIR2018<-rast("fc2018vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2018" per l'anno 2015. Le bande presenti in questo oggetto sono b8, b4 e b3 (nir, red, green).
 
-TC2023<-rast("tc2023vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2023" per l'anno 2023. Le bande presenti in questo oggetto sono b4, b3 e b2.
-NIR2023<-rast("fc2023vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2023" per l'anno 2023. Le bande presenti in questo oggetto sono b8, b4 e b3.
+TC2023<-rast("tc2023vaia.jpg")      #Importazione dell'immagine jpg nell'oggetto chiamato "TC2023" per l'anno 2023. Le bande presenti in questo oggetto sono b4, b3 e b2(red, green, blue).
+NIR2023<-rast("fc2023vaia.jpg")     #Importazione dell'immagine jpg nell'oggetto chiamato "NIR2023" per l'anno 2023. Le bande presenti in questo oggetto sono b8, b4 e b3 (nir, red, green).
 
 #Warning unknown extend: per la mancata georeferenziazione delle immagini. Un avviso di "Warning" non implica un "Error" ma ci avvisa di un potenziale problema.
 
