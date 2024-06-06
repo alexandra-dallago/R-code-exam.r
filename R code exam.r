@@ -175,7 +175,7 @@ plot(ndvi2015, col=clyellow)   #L'oggetto ndvi2015 viene visualizzato tramite la
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
-#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da  daltonismo.
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da daltonismo.
 par(mfrow=c(1,3))
 plot(ndvi2015, col=cividis)   #Visualizzazione tramite la funzione "plot()" dell'oggetto "ndvi2015" con la palette di colori "cividis".
 plot(ndvi2018, col=cividis)
@@ -238,21 +238,20 @@ var23y   #Variabilità spiegata dal secondo asse: 25.08918.
 var23z   #Variabilità spiegata dal terzo asse: 6.030021.
 var23k   #Variabilità spiegata dal quarto asse: 1.673006.
 
-inferno<-colorRampPalette(viridis::inferno(100))(100)   #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". 
-
-plot(pcimage15, col=inferno)   #Notiamo come PC3 indichi una bassa relazione.
-plot(pcimage18, col=inferno)            
-plot(pcimage23, col=inferno)
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da daltonismo.
+plot(pcimage15, col=cividis)   #Notiamo come PC3 indichi una bassa relazione.
+plot(pcimage18, col=cividis)            
+plot(pcimage23, col=cividis)
  
 ###Si sceglie di fare l'analisi sulla prima componente (pc1) ottenuta precedentemente dalla funzione "im.pca()" perchè è la più rappresentativa, attraverso la funzione "focal()" che crea una finestra di calcolo che mi darà la mappa della variabilità dell'immagine. 
 pca1_2015<-pcimage15[[1]]   #Seleziono la prima componente (quella con la maggiore variabilità spiegata) ottenuta dalla funzione "im.pca()" dell'oggetto pcimage15, attraverso le parentesi quadre.
 pca1_2018<-pcimage18[[1]]
 pca1_2023<-pcimage23[[1]]
 
-par(mfrow=c(1,3))   #Visualizzazione della prima componente ottentuta dalla PCA nei tre anni con la palette di colori "inferno". 
-plot(pca1_2015, col=inferno)      
-plot(pca1_2018, col=inferno)
-plot(pca1_2023, col=inferno)
+par(mfrow=c(1,3))   #Visualizzazione della prima componente ottentuta dalla PCA nei tre anni con la palette di colori "cividis". 
+plot(pca1_2015, col=cividis)      
+plot(pca1_2018, col=cividis)
+plot(pca1_2023, col=cividis)
 
 am15<-focal(pca1_2015,matrix(1/9,3,3),fun=sd)   #Calcolo della deviazione standard attraverso la funzione "focal()" che consente di creare una finestra di calcolo la cui dimensione/composizione è definita da "matrix()"; nello specifico 1/9 indica che la finestra è grande 9 quadretti disposi 3x3. "fun()" indica la funzione e "sd" indica la deviazione standard. 
 am23<-focal(pca1_2018,matrix(1/9,3,3),fun=sd)
@@ -264,6 +263,6 @@ plot(am18, col=clyellow)   #Valori vicino allo 0 indicano bassa variabilità; va
 plot(am23, col=clyellow)
 
 par(mfrow=c(1,3))
-plot(am15, col=inferno)    #Visualizzazione delle deviazioni standard delle immagini con la palette di colori "inferno".                                   
-plot(am18, col=inferno)
-plot(am23, col=inferno)
+plot(am15, col=cividis)    #Visualizzazione delle deviazioni standard delle immagini con la palette di colori "cividis".                                   
+plot(am18, col=cividis)
+plot(am23, col=cividis)
