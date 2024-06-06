@@ -1,6 +1,6 @@
 #Codice per l'analisi dei danni causati dalla Tempesta Vaia in Carnia (UD) in tre anni (2015,2018,2023). L'obiettivo principale è analizzare la perdita della copertura forestale, le precipitazioni nevose, e osservare eventuali miglioramenti e il recupero della vegetazione.
 ##Il seguente codice è stato scritto utilizzando questi pacchetti precedentemente scaricati.
-###Dopo aver installato i seguenti pacchetti con la funzione "install.packages("")" (NB: per installare il pacchetto bisogna inserirlo tra le virgolette), è necessario richiamare la funzione tramite il codice "library()" (richiamando la funzione non è necessario scrivere il pacchetto con le virgolette perchè è già presente in R una volta installato)
+###Dopo aver installato i seguenti pacchetti con la funzione "install.packages("")" (NB: per installare il pacchetto bisogna inserirlo tra le virgolette), è necessario richiamare la funzione tramite il codice "library()" (richiamando la funzione non è necessario scrivere il pacchetto con le virgolette perchè è già presente in R una volta installato).
 library(terra)       #Pacchetto R specializzata per l'analisi geospaziale e la manipolazione di dati raster.
 library(imageRy)     #Pacchetto R usato per gestire dati raster, la visualizzazione, l'importazione la modifica delle immagini. Inoltre, facilita la condivisione delle immagini.
 library(ggplot2)     #Pacchetto R per la creazione di grafici statistici.
@@ -11,7 +11,7 @@ library(viridis)     #Pacchetto R usato per dare delle palette di colore disting
 setwd("C:/Users/alexa/Desktop/Immagini esame")
 
 #IMPORTAZIONE DELLE IMMAGINI
-##Le immagini sono state prese dal sito "Copernicus Browser" nei dintorni di Sappada e Forni Avoltri (UD), Friuli Venezia Giulia; per 3 anni diversi (2015-2018-2023) nei mesi di ottobre per confrontare i danni causati dalla tempesta Vaia del 2018. Viene anche analizzala la copertura nevosa.
+##Le immagini sono state prese dal sito "Copernicus Browser" nei dintorni di Sappada e Forni Avoltri (UD), Friuli Venezia Giulia; per 3 anni diversi (2015-2018-2023) nei mesi di ottobre per confrontare i danni causati dalla tempesta Vaia del 2018. Viene anche analizzata la copertura nevosa.
 ###Per ciascun anno sono state scaricate due immagini dal satellite "sentinel 2", rispettivamente immagini "true color" aventi le bande b4, b3 e b2 (red, green, blue); e una seconda immagine "false color" aventi le bande b8, b4 e b3 (nir, red, green). Lo scopo è quello di prelevare la banda b8, ovvero quella del nir, per importarla in un unico oggetto assieme alle altre bande b4, b3 e b2.
 ####Importiamo le immagini dalla cartella indicata nella directory tramite la funzione "rast()" del pacchetto "terra", che ci consente di importare delle immagini creando un oggetto Spatraster.
 
@@ -54,19 +54,19 @@ vaia23<-c(b23r,b23g,b23b,b23nir)
 
 ##Nir sul red: questo comporta una visualizzazione che evidenzia le caratteristiche della vegetazione in quanto la vegetazione riflette molto di più nel nir rispetto alle altre superfici, facilitandone l'identificazione. E' possibile anche capirne lo stato di salute in quanto più queste sono in salute, più il nir verrà riflesso, e più l'immagine sarà luminosa. Di conseguenza, la vegetazione assumerà il colore rosso. Bisogna considerare anche che l'intensità della riflettanza cambia in base al tipo di vegetazione: un prato rifletterà di più di una pineta. 
 par(mfrow=c(1,3))
-im.plotRGB(vaia15, 4,2,3)   #4,2,3 specificano rispettivamente nir, green, blu dell'oggetto "vaia15"
+im.plotRGB(vaia15, 4,2,3)   #4,2,3 specificano rispettivamente nir, green, blu dell'oggetto "vaia15".
 im.plotRGB(vaia18, 4,2,3)  
 im.plotRGB(vaia23, 4,2,3) 
 
 ##Nir sul blu: la vegetazione apparirà di colore blu. Inoltre, il suolo diventerà giallo fornendo un ottimo contrasto tra vegetazione e suolo. 
 par(mfrow=c(1,3))
-im.plotRGB(vaia15, 1,2,4)   #1,2,4 specificano rispettivamente red, green, nir dell'oggetto "vaia15"
+im.plotRGB(vaia15, 1,2,4)   #1,2,4 specificano rispettivamente red, green, nir dell'oggetto "vaia15".
 im.plotRGB(vaia18, 1,2,4) 
 im.plotRGB(vaia23, 1,2,4) 
 
 ##Nir sul green: la vegetazione apparirà verde, dando un aspetto più naturale. 
 par(mfrow=c(1,3))
-im.plotRGB(vaia15, 1,4,3)   #1,4,3 specificano rispettivamente red, nir, blu dell'oggetto "vaia15"
+im.plotRGB(vaia15, 1,4,3)   #1,4,3 specificano rispettivamente red, nir, blu dell'oggetto "vaia15".
 im.plotRGB(vaia18, 1,4,3) 
 im.plotRGB(vaia23, 1,4,3) 
 
@@ -100,7 +100,7 @@ perc2015=prop2015*100   #Calcolo della percentuale dei cluster/classi rispetto a
 perc2018=prop2018*100             
 perc2023=prop2023*100   
 
-perc2015   #Riscrivo il nome dell'oggetto aventi le percentuali per visualizzare il dato. I risultati ottenuti sono: [1] 19.98092, [2] 54.42268, [3]25.59640; i numeri tra le parentesi quadre indicano la percentuale appartenente alla relativa classe/cluster 
+perc2015   #Riscrivo il nome dell'oggetto aventi le percentuali per visualizzare il dato. I risultati ottenuti sono: [1] 19.98092, [2] 54.42268, [3]25.59640; i numeri tra le parentesi quadre indicano la percentuale appartenente alla relativa classe/cluster .
 perc2018   #I risultati ottenuti sono: [1] 31.83124, [2] 34.10886, [3] 34.05817
 perc2023   #I risultati ottenuti sono: [1] 18.23045, [2] 50.31034, [3] 31.45921
 
@@ -121,7 +121,7 @@ anno2015+anno2018+anno2023   #Unisce i due grafici a barre creati precedentement
 
 #TIMES SERIES 
 ##Visualizziamo la differenza pixel per pixel tra le due immagini usando una palette di colori per evidenziare le variazioni tra le due. Osserviamo le differenze effettive tra le immagini in termini di intensità dei pixel. Otteniamo visivamente i cambiamenti della zona. 
-###Differenza tra le immagini della banda del Nir  
+###Differenza tra le immagini della banda del Nir. 
 diffnir1518<-vaia15[[4]] - vaia18[[4]]   #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir. 
 diffnir1823<-vaia18[[4]] - vaia23[[4]]
 diffnir1523<-vaia15[[4]] - vaia23[[4]]
@@ -141,14 +141,14 @@ plot(diffnir1518, col=cividis)
 plot(diffnir1823, col=cividis)
 plot(diffnir1523, col=cividis)
 
-#CALCOLO INDICE DI VARIABILITA': DVI E NDVI 
+#CALCOLO INDICE DI VARIABILITA': DVI E NDVI.
 ##Calcolo DVI: Indice di differenza di vegetazione. 
-###Questo indice sfrutta l'alta capacità di riflettanza dell'infrarosso e l'alta capacità di assorbimento del rosso per determinare, tramite una differenza nir-red, la biomassa/densità di vegetazione presente. Possiamo anche determianre lo stato di salute della pianta in base all'accrescimento del rosso o infrarosso (se aumenta da rosso a nir la pianta è sana). Si può usare anche la banda del blu per il calcolo. 
+###Questo indice sfrutta l'alta capacità di riflettanza dell'infrarosso e l'alta capacità di assorbimento del rosso per determinare, tramite una differenza nir-red, la biomassa/densità di vegetazione presente. Possiamo anche determinare lo stato di salute della pianta in base all'accrescimento del rosso o infrarosso (se aumenta da rosso a nir la pianta è sana). Si può usare anche la banda del blu per il calcolo. 
 ####Il valore DVI varia da +255 a -255 perchè la risoluzione radiometrica è di 8bit, quindi 255 possibilità. 
 
-dvi2015=vaia15[[4]] - vaia15[[1]]   #Differenza tra le bande del vicino infrarosso nir [[4]] e del rosso red [[1]]. I risultati del 2015 sono: min -220, max 225
-dvi2018=vaia18[[4]] - vaia18[[1]]   #I risultati del DVI del 2018 sono: min -205, max 198
-dvi2023=vaia23[[4]] - vaia23[[1]]   #I risultati del DVI del 2023 sono: min -215, max 223 
+dvi2015=vaia15[[4]] - vaia15[[1]]   #Differenza tra le bande del vicino infrarosso nir [[4]] e del rosso red [[1]]. I risultati del 2015 sono: min -220, max 225.
+dvi2018=vaia18[[4]] - vaia18[[1]]   #I risultati del DVI del 2018 sono: min -205, max 198.
+dvi2023=vaia23[[4]] - vaia23[[1]]   #I risultati del DVI del 2023 sono: min -215, max 223. 
 clyellow<-colorRampPalette(c("darkblue", "yellow", "red", "black"))(100)   #Crea una rampa di colori che va dal blu scuro, al giallo, al rosso e al nero con 100 gradazioni.
 
 par(mfrow=c(1,3))             
@@ -156,9 +156,9 @@ plot(dvi2015, col=clyellow)   #Le immagini vengono visualizzate tramite la funzi
 plot(dvi2018, col=clyellow)  
 plot(dvi2023, col=clyellow)  
 
-#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche.
 par(mfrow=c(1,3))
-plot(dvi2015, col=cividis)   #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015" con la palette di colori "cividis"
+plot(dvi2015, col=cividis)   #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015" con la palette di colori "cividis".
 plot(dvi2018, col=cividis)
 plot(dvi2023, col=cividis)
 
@@ -191,7 +191,7 @@ plot(diffNDVI1518, col=clyellow)   #Le immagini vengono visualizzate tramite la 
 plot(diffNDVI1823, col=clyellow)
 plot(diffNDVI1523, col=clyellow)
 
-#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti daltonismo
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti daltonismo.
 par(mfrow=c(1,3))
 plot(diffNDVI1518, col=cividis)   #Visualizzazione tramite la funzione "plot()" dell'oggetto "diffNDVI1518" con la palette di colori "cividis"
 plot(diffNDVI1823, col=cividis)
@@ -211,10 +211,10 @@ var15y<-32.793144*100/tot15
 var15z<-7.449183*100/tot15
 var15k<-2.016412*100/tot15
 
-var15x   #Variabilità spiegata dal primo asse: 76.35372
-var15y   #Variabilità spiegata dal secondo asse: 18.34972
-var15z   #Variabilità spiegata dal terzo asse: 4.168261
-var15k   #Variabilità spiegata dal quarto asse: 1.128303
+var15x   #Variabilità spiegata dal primo asse: 76.35372. 
+var15y   #Variabilità spiegata dal secondo asse: 18.34972.
+var15z   #Variabilità spiegata dal terzo asse: 4.168261.
+var15k   #Variabilità spiegata dal quarto asse: 1.128303.
 
 tot18<-sum(114.409353, 25.662257, 3.863173, 1.977942)
 var18x<-114.409353*100/tot18
@@ -222,10 +222,10 @@ var18y<-25.662257*100/tot18
 var18z<-3.863173*100/tot18
 var18k<-1.977942*100/tot18
 
-var18x   #Variabilità spiegata dal primo asse: 78.40944
-var18y   #Variabilità spiegata dal secondo asse: 17.5874
-var18z   #Variabilità spiegata dal terzo asse: 2.647592
-var18k   #Variabilità spiegata dal quarto asse: 1.355565
+var18x   #Variabilità spiegata dal primo asse: 78.40944.
+var18y   #Variabilità spiegata dal secondo asse: 17.5874.
+var18z   #Variabilità spiegata dal terzo asse: 2.647592.
+var18k   #Variabilità spiegata dal quarto asse: 1.355565.
 
 tot23<-sum(136.599691, 36.608307, 8.798568, 2.441129) 
 var23x<-136.599691*100/tot18
@@ -233,14 +233,14 @@ var23y<-36.608307*100/tot18
 var23z<-8.798568*100/tot18
 var23k<-2.441129*100/tot18
 
-var23x   #Variabilità spiegata dal primo asse: 93.61739
-var23y   #Variabilità spiegata dal secondo asse: 25.08918
-var23z   #Variabilità spiegata dal terzo asse: 6.030021
-var23k   #Variabilità spiegata dal quarto asse: 1.673006
+var23x   #Variabilità spiegata dal primo asse: 93.61739.
+var23y   #Variabilità spiegata dal secondo asse: 25.08918.
+var23z   #Variabilità spiegata dal terzo asse: 6.030021.
+var23k   #Variabilità spiegata dal quarto asse: 1.673006.
 
 inferno<-colorRampPalette(viridis::inferno(100))(100)   #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". 
 
-plot(pcimage15, col=inferno)   #Notiamo come PC3 indichi una bassa relazione
+plot(pcimage15, col=inferno)   #Notiamo come PC3 indichi una bassa relazione.
 plot(pcimage18, col=inferno)            
 plot(pcimage23, col=inferno)
  
