@@ -106,7 +106,7 @@ perc2023      #I risultati ottenuti sono: [1] 18.23045, [2] 50.31034, [3] 31.459
 
 #GGPLOT E DATAFRAME 
 
-class<-c("snow", "forest", "soil")       #Creazione del Vettore tramite "c()" concatenate a cui vengono attribuite 3 nomi, ovvero "snow", "forest", "soil". I nomi devono essere messi tra virgolette in quanto tali. Questi nomi rappresenteranno i cluster ottenuti durante la classificazione. 
+class<-c("snow", "forest", "soil")       #Creazione del vettore "class" tramite "c()" concatenate a cui vengono attribuite 3 nomi, ovvero "snow", "forest", "soil". I nomi devono essere messi tra virgolette in quanto tali. Questi nomi rappresenteranno i cluster ottenuti durante la classificazione. 
 y2015<-c(19.98092,54.42268,25.59640)     #Vettore a cui vengono attribuite le relative percentuali calcolate precedentemente (vengono quindi inserite le percentuali ottenute in "perc2015" che ricordiamo essere il numero di pixel corrispondenti a ciascuna classe per le due immagini; quindi otterremo 3 percentuali essendo le classi 3).
 y2018<-c(31.83124,34.10886, 34.05817)
 y2023<-c(18.23045,50.31034,31.45921)
@@ -114,23 +114,23 @@ y2023<-c(18.23045,50.31034,31.45921)
 ##Creiamo un dataframe contenente le classi e gli oggetti "y2015", "y2018", "y2023", contenenti le percentuali della classificazione calcolate precedentemente (quindi i risultati ottenuti in "perc2015" ad esempio). I dati vengono poi usati per creare tre grafici a barre per confrontare le distribuzioni delle classi nelle immagini.  
 
 DATAFRAME<-data.frame(class,y2015,y2018,y2023)       #Dataframe dove vene inserito l'oggetto "class" (quindi "snow", "forest", "soil"), e gli  oggetti "y2015", "y2018", "y2023" con le Percentuali delle classificazioni. 
-anno2015 <-ggplot(DATAFRAME,aes(x=class, y=y2015, fill=class))+ geom_bar(stat="identity", color="black") + ylim(c(0, 55)) + scale_fill_manual(values = c("forest" = "#77dd77", "snow" = "#59b7d8", "soil" = "#ffb347"))       #Creazione di un grafico a barre utilizzando ggplot (dal paccketto "ggplot2") per rappresentare la distribuzione delle percentuali nelle 3 classi ("snow", "forest", "soil"). "aes()" specifica l'estetica del grafico, quindi si specifica che nell'asse x viene inserito l'oggetto "classi" e in y l'oggetto "y2015". "fill=" specifica che il riempimento delle barre è determinato dall'oggetto "class". "geom_bar()" specifica che il tipo di grafico, ovvero quello a barre.stat="identyty" usa i valori forniti dall'oggetto "y2015" per l'altezza delle barre. "color=black" indica che il bordo delle barre sono colorate di nero. "ylim(c(0,45))" indica che la scala sull'asse y è impostata da 0 a 45. "scale_fill_manual" permette di specificare manualmente i colori di riempimento delle barre tramite "values=c" che è un vettore che associa ai valori contenuti in "class" i colori. I codici dei colori sono stati presi dal sito "tacolor.com" 
+anno2015 <-ggplot(DATAFRAME,aes(x=class, y=y2015, fill=class))+ geom_bar(stat="identity", color="black") + ylim(c(0, 55)) + scale_fill_manual(values = c("forest" = "#77dd77", "snow" = "#59b7d8", "soil" = "#ffb347"))       #Creazione di un grafico a barre utilizzando ggplot (dal paccketto "ggplot2") per rappresentare la distribuzione delle percentuali nelle 3 classi ("snow", "forest", "soil"). "aes()" specifica l'estetica del grafico, quindi si specifica che nell'asse x viene inserito l'oggetto "class" e in y l'oggetto "y2015". "fill=" specifica che il riempimento delle barre è determinato dall'oggetto "class". "geom_bar()" specifica che il tipo di grafico, ovvero quello a barre. "color=black" indica che il bordo delle barre sono colorate di nero. "ylim(c(0,45))" indica che la scala sull'asse y è impostata da 0 a 45. "scale_fill_manual" permette di specificare manualmente i colori di riempimento delle barre tramite "values=c" che è un vettore che associa ai valori contenuti in "class" i colori. I codici dei colori sono stati presi dal sito "tacolor.com" 
 anno2018 <-ggplot(DATAFRAME,aes(x=class, y=y2018, fill=class))+ geom_bar(stat="identity", color="black") + ylim(c(0, 55)) + scale_fill_manual(values = c("forest" = "#77dd77", "snow" = "#59b7d8", "soil" = "#ffb347")) 
 anno2023 <-ggplot(DATAFRAME,aes(x=class, y=y2023, fill=class))+ geom_bar(stat="identity", color="black") + ylim(c(0, 55)) + scale_fill_manual(values = c("forest" = "#77dd77", "snow" = "#59b7d8", "soil" = "#ffb347"))      
 anno2015+anno2018+anno2023                           #Unisce i due grafici a barre creati precedentemente in una sola finestra.
 
 #TIMES SERIES 
-##Visualizziamo la differenza pixel per pixel tra le due immagini usando una palette di colori per evidenziare le variazioni tra le due. Osserviamo le differenze effettive tra le immagini in termini di intensità dei pixel. Otteniamo visivamente i cambiamenti di una certa zona. 
+##Visualizziamo la differenza pixel per pixel tra le due immagini usando una palette di colori per evidenziare le variazioni tra le due. Osserviamo le differenze effettive tra le immagini in termini di intensità dei pixel. Otteniamo visivamente i cambiamenti della zona. 
 ###Differenza tra le immagini della banda del Nir  
 diffnir1518<-vaia15[[4]] - vaia18[[4]]    #Calcola la differenza pixel per pixel tra le due immagini considerando solo il quarto elemento selezionato tramite "[[4]]" che in questo caso rappresenta il nir. 
 diffnir1823<-vaia18[[4]] - vaia23[[4]]
 diffnir1523<-vaia15[[4]] - vaia23[[4]]
 
-clblu<- colorRampPalette(c("blue","white", "red")) (100)      #Crea una rampa di colori che va dal blu al bianco al rosso con 100 gradazioni.
+clblu<- colorRampPalette(c("blue","white", "red")) (100)      #Crea una palette di colori che va dal blu al bianco al rosso con 100 gradazioni.
 
 #I pixel blu indicano una minore intensità nella prima immagine rispetto alla seconda, quindi una probabile diminuzione dell'intensità del nir e quindi una probabile diminuzione della vegetazione. I pixel bianchi indicano una assenza di intensità. I pixel rossi indicano una maggiore intensità nella prima immagine rispetto alla seconda, ovvero un aumento dell'intensità del nir e quindi una crescita della vegetazione. I valori variano da +255 a -255 perchè la risoluzione radiometrica è di 8bit, quindi 255 possibilità. 
 par(mfrow=c(1,3))
-plot(diffnir1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "clblu" precedentemente creata. Osserviamo quindi la differenza tra le immagini dal 2015 al 2018.
+plot(diffnir1518, col=clblu)  #Visualizzazione dell'oggetto "diff1518" con la rampa di colori "clblu" precedentemente creata. Osserviamo quindi la differenza tra le immagini del 2015 e del 2018.
 plot(diffnir1823, col=clblu) 
 plot(diffnir1523, col=clblu) 
 
@@ -146,7 +146,7 @@ plot(diffnir1523, col=cividis)
 ###Questo indice sfrutta l'alta capacità di riflettanza dell'infrarosso e l'alta capacità di assorbimento del rosso per determinare, tramite una differenza nir-red, la biomassa/densità di vegetazione presente. Possiamo anche determianre lo stato di salute della pianta in base all'accrescimento del rosso o infrarosso (se aumenta da rosso a nir la pianta è sana). Si può usare anche la banda del blu per il calcolo. 
 ####Il valore DVI varia da +255 a -255 perchè la risoluzione radiometrica è di 8bit, quindi 255 possibilità. 
 
-dvi2015=vaia15[[4]] - vaia15[[1]]     #Differenza tra le bande del vicino infrarosso nir [[4]] e del rosso red [[1]]. I risultati sono: min -220, max 225
+dvi2015=vaia15[[4]] - vaia15[[1]]     #Differenza tra le bande del vicino infrarosso nir [[4]] e del rosso red [[1]]. I risultati del 2015 sono: min -220, max 225
 dvi2018=vaia18[[4]] - vaia18[[1]]     #I risultati del DVI del 2018 sono: min -205, max 198
 dvi2023=vaia23[[4]] - vaia23[[1]]     #I risultati del DVI del 2023 sono: min -215, max 223 
 clyellow<-colorRampPalette(c("darkblue", "yellow", "red", "black"))(100)     #Crea una rampa di colori che va dal blu scuro, al giallo, al rosso e al nero con 100 gradazioni.
@@ -158,7 +158,7 @@ plot(dvi2023,col=clyellow)
 
 #Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
 par(mfrow=c(1,3))
-plot(dvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015"
+plot(dvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "dvi2015" con la palette di colori "cividis"
 plot(dvi2018, col=cividis)
 plot(dvi2023, col=cividis)
 
@@ -166,18 +166,18 @@ plot(dvi2023, col=cividis)
 ##Il valore NDVI va da +1 a -1  perchè se il nir è massimo e red minimo, inserendo nella formula otteniamo: 255-0/255+0=1 (valore massimo). Otteniamo -1 quando il nir è minimo. 
 ###Interpretazione dei dati NDVI: valori alti, vicini a +1= vegetazione densa e sana; valori vicini 0= vegetazione scarsa, neve/ghiaccio o suolo nudo; valori bassi vicini a -1= superfici non vegetate o urbanizzate come costruzioni o strade. 
 
-ndvi2015<-dvi2015/(vaia15[[4]]+vaia15[[1]])    #"dvi2015" è il numeratore nir-red. "vaia15[[4]]+vaia15[[1]" rappresenta il denominatore, ovvero nir+red; dove le bande sono nir=4 e red=1.
+ndvi2015<-dvi2015/(vaia15[[4]]+vaia15[[1]])    #"dvi2015" è il numeratore nir-red calcolato precedentemente. "vaia15[[4]]+vaia15[[1]" rappresenta il denominatore, ovvero nir+red; dove le bande sono nir=4 e red=1.
 ndvi2018<-dvi2018/(vaia18[[4]]+vaia18[[1]])
 ndvi2023<-dvi2023/(vaia23[[4]]+vaia23[[1]])   
 
 par(mfrow=c(1,3))                 #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
-plot(ndvi2015, col=clyellow)      #l'oggetto ndvi2015 vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow". 
+plot(ndvi2015, col=clyellow)      #L'oggetto ndvi2015 viene visualizzato tramite la funzione "plot()" con la relativa palette di colori "clyellow". 
 plot(ndvi2018, col=clyellow)
 plot(ndvi2023, col=clyellow)
 
-#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da  daltonismo.
 par(mfrow=c(1,3))
-plot(ndvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "ndvi2015" con la palette di colori "cividis"
+plot(ndvi2015, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "ndvi2015" con la palette di colori "cividis".
 plot(ndvi2018, col=cividis)
 plot(ndvi2023, col=cividis)
 
@@ -187,11 +187,11 @@ diffNDVI1823=ndvi2018 - ndvi2023
 diffNDVI1523=ndvi2015 - ndvi2023
 
 par(mfrow=c(1,3))                   #Funzione usata per creare una finestra grafica in una griglia di righe e colonne specificando il numero di righe e colonne che in questo caso sono 1 riga e 3 colonne.
-plot(diffNDVI1518, col=clyellow)    #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow".        
+plot(diffNDVI1518, col=clyellow)    #Le immagini vengono visualizzate tramite la funzione "plot()" con la relativa palette di colori "clyellow" creata precedentemente.        
 plot(diffNDVI1823, col=clyellow)
 plot(diffNDVI1523, col=clyellow)
 
-#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti da persone daltoniche
+#Visualizzazione dei grafici precedenti con la palette di colori "cividis" creata precedentemente per i soggetti affetti daltonismo
 par(mfrow=c(1,3))
 plot(diffNDVI1518, col=cividis)      #Visualizzazione tramite la funzione "plot()" dell'oggetto "diffNDVI1518" con la palette di colori "cividis"
 plot(diffNDVI1823, col=cividis)
@@ -199,7 +199,7 @@ plot(diffNDVI1523, col=cividis)
 
 #ANALISI MULTIVARIATA 
 ##Analisi delle componenti principali (PCA) delle immagini.
-###Non scelgo la banda: viene eseguita la PCA sull'intera immagine senza specificare una banda. E' una analisi delle componenti principali dell'immagine che ci permette di portare un sistema a più bande in una sola. CI permette quindi di trasformare i dati presenti in un oggetto e trasformarli  in un nuovo set di variavili chiamate componenti principali che spiegheranno la variabilità dei dati originali.  
+###Non scelgo la banda: viene eseguita la PCA sull'intera immagine senza specificare una banda. E' una analisi delle componenti principali dell'immagine che ci permette di portare un sistema a più bande in una sola. Ci permette quindi di trasformare i dati presenti in un oggetto e trasformarli  in un nuovo set di variabili chiamate componenti principali che spiegheranno la variabilità dei dati originali.  
 
 pcimage15<-im.pca(vaia15)    #La funzione im.pca() ci da i valori delle componenti principali, ovvero:  136.453262, 32.793144, 7.449183, 2.016412
 pcimage18<-im.pca(vaia18)    #I valori delle componenti principali sono: 114.409353, 25.662257,3.863173, 1.977942
@@ -238,14 +238,14 @@ var23y       #Variabilità spiegata dal secondo asse: 25.08918
 var23z       #Variabilità spiegata dal terzo asse: 6.030021
 var23k       #Variabilità spiegata dal quarto asse: 1.673006
 
-inferno <- colorRampPalette(viridis::inferno(100))(100)      #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". La funzione colorRampPalette è una funzione che permette la formazione di un gradiente di colore che in questo caso è di ovvero 100 
-    
+inferno <- colorRampPalette(viridis::inferno(100))(100)      #Creata una palette di colori chiamata "inferno" generando 100 colori diversi dalla palette prefatta "inferno" dal pacchetto "viridis". 
+
 plot(pcimage15, col=inferno)            #Notiamo come PC3 indichi una bassa relazione
 plot(pcimage18, col=inferno)            
 plot(pcimage23, col=inferno)
  
 ###Si sceglie di fare l'analisi sulla prima componente (pc1) ottenuta precedentemente dalla funzione "im.pca()" perchè è la più rappresentativa, attraverso la funzione "focal()" che crea una finestra di calcolo che mi darà la mappa della variabilità dell'immagine. 
-pca1_2015<-pcimage15[[1]]                #Seleziono la prima componente (quella con la maggiore variabilità spiegata) ottenuta dalla funzione "im.pca()" dell'oggetto pcimage15, attravereso le parentesi quadre.
+pca1_2015<-pcimage15[[1]]                #Seleziono la prima componente (quella con la maggiore variabilità spiegata) ottenuta dalla funzione "im.pca()" dell'oggetto pcimage15, attraverso le parentesi quadre.
 pca1_2018<-pcimage18[[1]]
 pca1_2023<-pcimage23[[1]]
 
